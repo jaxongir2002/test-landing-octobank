@@ -1,0 +1,23 @@
+.toast-custom {
+  padding: 15px 25px;
+  opacity: .85;
+  background: #00883029 !important;
+  min-height: 57px;
+  min-width: 344px;
+  max-width: 500px;
+  border-radius: 26px;
+
+  .Vue-Toastification__icon {
+    display: none;
+  }
+
+  .Vue-Toastification__toast-body {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #1B1B1C;
+  }
+  .Vue-Toastification__toast-component-body {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "open-account",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^1.0.3",
+    "@primevue/forms": "^4.3.3",
+    "@tailwindcss/vite": "^4.1.10",
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "@vueuse/core": "^10.10.0",
+    "axios": "^1.7.2",
+    "pinia": "^2.1.7",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.3",
+    "qr-code-styling": "^1.9.2",
+    "sass": "^1.77.2",
+    "tailwindcss": "^4.1.10",
+    "unplugin-auto-import": "^0.17.6",
+    "unplugin-vue-define-options": "^1.4.5",
+    "vite-plugin-pages": "^0.32.2",
+    "vite-plugin-vue-layouts": "^0.11.0",
+    "vue": "^3.4.21",
+    "vue-i18n": "^9.13.1",
+    "vue-router": "^4.3.2",
+    "vue-the-mask": "^0.11.1",
+    "vue-toastification": "^2.0.0-rc.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.0"
+  }
+}

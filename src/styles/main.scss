@@ -1,0 +1,131 @@
+@use "/node_modules/primeflex/primeflex.css";
+@use "./fonts";
+@use "./header";
+@use "./typography";
+@use "./toast";
+@import "tailwindcss";
+
+$page-background: #FFFF;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Manrope, sans-serif;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 85%;
+  width: 100%;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1200px) {
+    padding: 0 15px;
+  }
+}
+
+.app-page {
+  background: $page-background;
+}
+
+.app-account-page {
+  background: $page-background;
+  position: relative;
+  z-index: -1;
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('@/assets/img/account-page-bg.svg') no-repeat;
+    z-index: -1;
+  }
+}
+
+.app-account-card {
+  width: 100% !important;
+  max-height: calc(150vh - (56px + 110px + 50px));
+  max-width: 1200px;
+  height: 100%;
+  overflow-y: auto;
+
+  @media screen and (min-width: 650px) {
+    min-width: 626px;
+  }
+}
+
+.app-account-card-application {
+  width: 100% !important;
+  max-height: calc(100vh - (56px + 110px + 100px));
+  max-width: 100%;
+  min-width: 626px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.app-account-stepper {
+  width: 100% !important;
+
+  .p-steppanel {
+    border-radius: 24px;
+  }
+}
+
+.app-change-variants {
+  top: 20px;
+  right: 20px;
+  z-index: 1000000;
+}
+
+.app-otp-input {
+  .p-inputtext {
+    height: 56px;
+  }
+}
+
+.app-otp-send-retry-text {
+  &:hover {
+    opacity: .38;
+    transition: .3s;
+  }
+}
+
+.app-form-message-error {
+  .p-message-text {
+    color: #BA1A1A;
+    font-size: 16px;
+    font-weight: 400;
+
+    @media screen and (max-width: 425px) {
+      font-size: 12px !important;
+    }
+  }
+}
+
+.app-icon-span {
+  font-size: 19px !important;
+  color: #374867;
+}
+
+.app-icon {
+  padding: 11px;
+  background: #9B358914;
+  border-radius: 50%;
+}
+
+.app-footer-account-open {
+  background: #EFEFF4;
+}
+
+.p-datepicker-day-selected {
+  background: #374867 !important;
+}
+
+.p-datepicker-year-selected {
+  background: #374867 !important;
+
+}
