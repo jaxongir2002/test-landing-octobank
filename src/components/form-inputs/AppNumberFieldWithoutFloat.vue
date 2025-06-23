@@ -2,14 +2,12 @@
 import InputNumber from 'primevue/inputnumber';
 import Message from 'primevue/message';
 
-
 const props = defineProps({
   errorMessage: {
     type: String,
     required: false,
   },
 })
-
 
 const elementId = computed(() => {
   const attrs = useAttrs()

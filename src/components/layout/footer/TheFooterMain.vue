@@ -13,7 +13,6 @@ import Image from "primevue/image";
     <div class="card">
       <div class="card-information">
         <div class="footer_05_social-wrapper">
-
           <a href="https://t.me/octobank_aj"
              aria-label="Перейти в соц. сеть">
             <Image
@@ -32,7 +31,6 @@ import Image from "primevue/image";
                 width="35px"
                 height="35px"
             />
-
           </a>
 
           <a href="https://www.instagram.com/octobank_aj/"
@@ -76,7 +74,6 @@ import Image from "primevue/image";
           </a>
         </div>
         <div class="footer_05_contact-wrapper">
-
           <a href="mailto:info@octobank.uz">
             <div class="footer_05_contact-text" style="margin-bottom: 10px;">
               info@octobank.uz
@@ -88,7 +85,6 @@ import Image from "primevue/image";
               +998 71 202 33 33
             </div>
           </a>
-
         </div>
       </div>
     </div>

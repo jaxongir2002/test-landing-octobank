@@ -24,8 +24,9 @@ const formValidRules = ref({
   seria: [requiredValidator],
   numberDoc: [requiredValidator],
   dateBirth: [requiredValidator],
-  oferta: [(val) => requiredValidator.call(null, val, 'Оферта обязательна к прочтению')],
+  oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
 });
+const requiredFields = ['clientType', 'oferta', 'tin', 'pinfl', 'seria', 'numberDoc', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
@@ -49,6 +50,15 @@ const onClickNext = async () => {
     }
   }
 }
+const isOrganizationValid = computed(() => {
+  return requiredFields.every(field => {
+    const value = organization.value[field];
+    if (field === 'oferta') {
+      return Array.isArray(value) && value.length;
+    }
+    return !!value;
+  });
+});
 
 const onUpdateRadioButton = () => {
   organization.value.tin = null
@@ -132,9 +142,10 @@ const onUpdateRadioButton = () => {
                 v-model="organization.seria"
                 class="flex-1"
                 name="seria"
-                :disabled="selectIsPerson()"
+                v-mask="'AA'"
                 :error-message="$form?.seria?.error?.message"
                 label="Серия документа, удостоверяющего личность"
+                maxlength="2"
             />
           </div>
           <div class="col-12">
@@ -142,7 +153,7 @@ const onUpdateRadioButton = () => {
                 v-model="organization.numberDoc"
                 class="flex-1"
                 name="numberDoc"
-                :disabled="selectIsPerson()"
+                v-mask="'#######'"
                 :error-message="$form?.numberDoc?.error?.message"
                 label="Номер документа, удостоверяющего личность"
             />
@@ -151,7 +162,6 @@ const onUpdateRadioButton = () => {
             <AppDatePicker v-model="organization.dateBirth"
                            class="flex-1"
                            name="dateBirth"
-                           :disabled="selectIsPerson()"
                            :error-message="$form?.dateBirth?.error?.message"
                            label="Дата рождения"/>
 
@@ -174,7 +184,7 @@ const onUpdateRadioButton = () => {
                      style="width: 90%; font-size: 17px">Нажимая
                 на кнопку, я даю согласие на обработку <a target="_blank"
                                                           href="https://octobank.uz/usloviya-ispolzovaniya"><strong>персональных
-                  данных</strong></a>в соответствии с<a target="_blank"
+                  данных</strong></a> в соответствии с<a target="_blank"
                                                         href="https://octobank.uz/politika-konfidentsialnosti"><strong>политикой
                   обработки персональных данных</strong></a>
               </label>
@@ -201,10 +211,9 @@ const onUpdateRadioButton = () => {
             label="Отменить"
             @click="emit('prev')"
         />
-
         <AppButton
             class="flex-1"
-            :disabled="!organization.oferta.length"
+            :disabled="!isOrganizationValid"
             @click="onClickNext"
             label="Продолжить"
         />
