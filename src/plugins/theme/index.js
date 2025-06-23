@@ -48,6 +48,7 @@ export default definePreset(Aura, {
 
         card: {
             color: '#1B1B1C',
+            background: '#f5f6f7',
             border: {
                 radius: "24px",
             }

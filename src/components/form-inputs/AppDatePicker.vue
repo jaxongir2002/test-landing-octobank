@@ -15,7 +15,7 @@ const elementId = computed(() => {
   const attrs = useAttrs()
   const _elementIdToken = attrs.id || attrs.label
 
-  return _elementIdToken ? `app-text-field-${ _elementIdToken }-${ Math.random().toString(36).slice(2, 7) }` : undefined
+  return _elementIdToken ? `app-text-field-${_elementIdToken}-${Math.random().toString(36).slice(2, 7)}` : undefined
 })
 </script>
 
@@ -28,6 +28,8 @@ const elementId = computed(() => {
     >
       <DatePicker
           v-bind="$attrs"
+          :manualInput="false"
+          dateFormat="dd.mm.yy"
           :id="elementId"
       />
       <label :for="elementId">{{ $attrs?.label }}</label>

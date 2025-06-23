@@ -143,7 +143,7 @@ const openFile = (filename) => {
             <div class="flex flex-column gap-2">
               <AppRadioButton
                   v-model="application.primary"
-                  label="Первичный"
+                  label="Основной"
                   name="primary"
                   value="yes"
               />
@@ -155,7 +155,29 @@ const openFile = (filename) => {
               />
             </div>
           </li>
-
+          <li class="mb-5">
+            <div class="app-color-1B1B1C font-medium mb-4 text-xl">
+              Дополнительно
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
+              <div style="grid-column: span 6 / span 6;">
+                <AppCheckbox
+                    v-model="application.services"
+                    label="Расчетный счет в долларах США"
+                    name="services"
+                    value="terminal"
+                />
+              </div>
+              <div style="grid-column: span 6 / span 6;">
+                <AppCheckbox
+                    v-model="application.services"
+                    label="Транзитный счет"
+                    name="services"
+                    value="kkm"
+                />
+              </div>
+            </div>
+          </li>
           <!-- 2. Продукт РКО -->
           <li class="mb-5">
             <div class="app-color-1B1B1C font-medium mb-4 text-xl">Продукт РКО</div>
@@ -221,16 +243,18 @@ const openFile = (filename) => {
             <div class="flex flex-column gap-2">
               <AppCheckbox
                   v-model="application.oferta"
-                  label="Оферта на открытие счета и ДКБО"
+                  label="Нажимая на кнопку, я подтверждаю оферту на открытие счета и ДКБО"
                   value="oferta"
                   name="oferta"
                   :error-message="$form?.oferta?.error?.message"
               />
+
+
               <AppCheckbox
                   v-model="application.oferta"
-                  label="Оферта на эквайринг"
-                  value="offerta_acquiring"
-                  name="oferta"
+                  label="Нажимая на кнопку, я подтверждаю оферту на эквайринг"
+                  value="yes"
+                  name="acquiring"
                   :error-message="$form?.oferta?.error?.message"
               />
             </div>

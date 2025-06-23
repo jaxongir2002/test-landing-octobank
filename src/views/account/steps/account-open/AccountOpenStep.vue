@@ -19,14 +19,12 @@ const emit = defineEmits(['has-petition', 'create-account', 'hasAccount', 'prev'
 const form = ref();
 const formValidRules = ref({
   tin: [requiredValidator],
-  pinfl: [requiredValidator],
   phone: [requiredValidator],
   seria: [requiredValidator],
-  numberDoc: [requiredValidator],
   dateBirth: [requiredValidator],
   oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
 });
-const requiredFields = ['clientType', 'oferta', 'tin', 'pinfl', 'seria', 'numberDoc', 'dateBirth', 'phone'];
+const requiredFields = ['clientType', 'oferta', 'tin', 'seria', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
@@ -53,16 +51,26 @@ const onClickNext = async () => {
 const isOrganizationValid = computed(() => {
   return requiredFields.every(field => {
     const value = organization.value[field];
+
+    if (field === 'tin' && (value === null)) {
+      return true;
+    }
+
     if (field === 'oferta') {
       return Array.isArray(value) && value.length;
     }
+
     return !!value;
   });
 });
 
+
 const onUpdateRadioButton = () => {
-  organization.value.tin = null
+  organization.value.tin = null;
 }
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 </script>
 
 <template>
@@ -94,7 +102,7 @@ const onUpdateRadioButton = () => {
           :validateOnBlur="true"
       >
         <div class="flex flex-wrap gap-4 pl-4 mb-3">
-          <div class="flex items-center gap-2">
+          <div style="display: flex; gap:0.5rem;align-items: center">
             <RadioButton
                 v-model="organization.clientType"
                 inputId="for-company"
@@ -103,7 +111,7 @@ const onUpdateRadioButton = () => {
             />
             <label for="for-company" style="font-size: 18px" class="cursor-pointer">Для организации</label>
           </div>
-          <div class="flex items-center gap-2">
+          <div style="display: flex; gap:0.5rem;align-items: center">
             <RadioButton
                 v-model="organization.clientType"
                 inputId="for-person"
@@ -118,10 +126,10 @@ const onUpdateRadioButton = () => {
         <div class="flex flex-column">
           <div class="col-12">
             <AppTextField
+                v-show="!selectIsPerson()"
                 v-model="organization.tin"
                 class="flex-1"
                 name="tin"
-                :disabled="selectIsPerson()"
                 v-mask="'#########'"
                 :error-message="$form?.tin?.error?.message"
                 label="ИНН"
@@ -129,33 +137,12 @@ const onUpdateRadioButton = () => {
           </div>
           <div class="col-12">
             <AppTextField
-                v-model="organization.pinfl"
-                class="flex-1"
-                name="pinfl"
-                v-mask="'##############'"
-                :error-message="$form?.pinfl?.error?.message"
-                label="ПИНФЛ"
-            />
-          </div>
-          <div class="col-12">
-            <AppTextField
                 v-model="organization.seria"
                 class="flex-1"
                 name="seria"
-                v-mask="'AA'"
+                v-mask="'AA#######'"
                 :error-message="$form?.seria?.error?.message"
-                label="Серия документа, удостоверяющего личность"
-                maxlength="2"
-            />
-          </div>
-          <div class="col-12">
-            <AppTextField
-                v-model="organization.numberDoc"
-                class="flex-1"
-                name="numberDoc"
-                v-mask="'#######'"
-                :error-message="$form?.numberDoc?.error?.message"
-                label="Номер документа, удостоверяющего личность"
+                :label="selectIsPerson()?'Серия и номер удостоверяющего документа': ' Серия и номер удостоверяющего документа директора'"
             />
           </div>
           <div class="col-12">
@@ -163,7 +150,7 @@ const onUpdateRadioButton = () => {
                            class="flex-1"
                            name="dateBirth"
                            :error-message="$form?.dateBirth?.error?.message"
-                           label="Дата рождения"/>
+                           :label="selectIsPerson()?'Дата рождения ':'Дата рождения директора'"/>
 
           </div>
           <div class="col-12 mb-2">
@@ -171,22 +158,58 @@ const onUpdateRadioButton = () => {
                 v-model="organization.phone"
                 class="flex-1"
                 name="phone"
-                label="Номер телефона"
+                :label="selectIsPerson()?'Номер телефона ':'Номер телефона директора'"
                 v-mask="phoneMask"
                 :error-message="$form?.phone?.error?.message"
             />
           </div>
 
-          <div class="col-12 pl-4 mb-3 sm:mb-5">
+          <div class="col-12 pl-4">
             <div class="flex items-center gap-2">
               <Checkbox v-model="organization.oferta" inputId="oferta" name="oferta" value="oferta"/>
               <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
                      style="width: 90%; font-size: 17px">Нажимая
                 на кнопку, я даю согласие на обработку <a target="_blank"
                                                           href="https://octobank.uz/usloviya-ispolzovaniya"><strong>персональных
-                  данных</strong></a> в соответствии с<a target="_blank"
-                                                        href="https://octobank.uz/politika-konfidentsialnosti"><strong>политикой
+                  данных</strong></a> в соответствии с <a target="_blank"
+                                                          href="https://octobank.uz/politika-konfidentsialnosti"><strong>политикой
                   обработки персональных данных</strong></a>
+              </label>
+            </div>
+            <Message
+                v-if="$form?.oferta?.error?.message"
+                class="app-form-message-error mt-2"
+                severity="error"
+                size="small"
+                variant="simple"
+            >
+              {{ $form?.oferta?.error?.message }}
+            </Message>
+          </div>
+          <div class="col-12 pl-4 ">
+            <div class="flex items-center gap-2">
+              <Checkbox v-model="organization.oferta" inputId="oferta" name="oferta" value="oferta"/>
+              <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
+                     style="width: 90%; font-size: 17px">Нажимая на кнопку, я даю свое согласие на рекламное
+                информирование.
+              </label>
+            </div>
+            <Message
+                v-if="$form?.oferta?.error?.message"
+                class="app-form-message-error mt-2"
+                severity="error"
+                size="small"
+                variant="simple"
+            >
+              {{ $form?.oferta?.error?.message }}
+            </Message>
+          </div>
+          <div class="col-12 pl-4 ">
+            <div class="flex items-center gap-2">
+              <Checkbox v-model="organization.oferta" inputId="oferta" name="oferta" value="oferta"/>
+              <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
+                     style="width: 90%; font-size: 17px">
+                Нажимая на кнопку, я даю свое согласие на передачу персональных данных третьим лицам (партнерам)
               </label>
             </div>
             <Message

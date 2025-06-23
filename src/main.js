@@ -11,6 +11,7 @@ import Tooltip from 'primevue/tooltip';
 import "@/styles/main.scss"
 import "vue-toastification/dist/index.css"
 import 'primeicons/primeicons.css'
+import FocusTrap from 'primevue/focustrap';
 
 const app = createApp(App)
 
@@ -29,5 +30,5 @@ app.use(ToastService)
 
 app.directive('mask', mask)
 app.directive('tooltip', Tooltip)
-
+app.directive('focustrap', FocusTrap);
 app.mount('#app')

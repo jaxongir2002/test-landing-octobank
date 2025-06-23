@@ -10,10 +10,10 @@ import AccountOpenOtpStep from "@/views/account/steps/account-otp/AccountOpenOtp
 import AccountOpenIdentifyQr from "@/views/account/steps/identify-qr/AccountOpentIdentifyQr.vue";
 import {useVariantResolver} from "@/stores/useVariantResolver.js";
 import Image from "primevue/image";
-import qrIdentificationRecognized from "@/assets/img/qr-identification-recognized.svg";
 import qrIdentificationUnRecognized from "@/assets/img/qr-identification-unrecognized.svg";
 import AccountOpenApplicationFirst from "@/views/account/steps/applications/AccountOpenApplicationFirst.vue";
 import AccountOpenApplicationTariff from "@/views/account/steps/applications/AccountOpenApplicationTariff.vue";
+import AccountOpenApplicationOrg from "@/views/account/steps/applications/AccountOpenApplicationOrg.vue";
 
 const variantStore = useVariantResolver();
 
@@ -35,8 +35,8 @@ const onSuccessStep = ({number, status}, next) => {
 }
 
 const onCreateAccount = (organization, next) => {
-  petition.value = organization.phone
-
+  petition.value = organization
+  console.log(organization)
   next('create-account')
 }
 
@@ -152,6 +152,7 @@ onMounted(() => {
           <AccountOpenOtpStep
               ref="accountOpenOtp"
               :phone="petition.phone"
+              :client-type="petition.clientType"
               @prev="activateCallback('account-form')"
               @next="activateCallback('identify-qr')"
           />
@@ -160,7 +161,7 @@ onMounted(() => {
         <StepPanel v-slot="{ activateCallback }" :value="'identify-qr'">
           <AccountOpenIdentifyQr
               @prev="activateCallback('create-account')"
-              @recognized="activateCallback('application-first')"
+              @recognized="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
               @unrecognized="activateCallback('identify-qr-unrecognized')"
           />
         </StepPanel>
@@ -222,7 +223,12 @@ onMounted(() => {
               @next="activateCallback('application-tariff')"
           />
         </StepPanel>
-
+        <StepPanel v-slot="{ activateCallback }" :value="'application-org'">
+          <AccountOpenApplicationOrg
+              @prev="activateCallback('account-form')"
+              @next="activateCallback('application-tariff')"
+          />
+        </StepPanel>
         <StepPanel v-slot="{ activateCallback }" :value="'application-tariff'">
           <AccountOpenApplicationTariff
               @prev="activateCallback('account-form')"

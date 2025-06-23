@@ -8,6 +8,15 @@ const props = defineProps({
     required: false,
   },
 });
+
+onMounted(() => {
+  nextTick(() => {
+    const input = document.querySelector('.p-inputotp-input');
+    if (input) {
+      input.focus();
+    }
+  });
+});
 </script>
 
 <template>
@@ -17,7 +26,10 @@ const props = defineProps({
         integerOnly
         size="large"
         v-bind="$attrs"
-    />
+        autofocus
+    >
+
+    </InputOtp>
     <Message
         class="app-form-message-error mt-2"
         v-if="errorMessage"
@@ -29,3 +41,5 @@ const props = defineProps({
     </Message>
   </div>
 </template>
+
+<style></style>

@@ -7,27 +7,29 @@ import {requiredValidator} from "@/utils/form/validators.js";
 import AppOtpInput from "@/components/AppOtpInput.vue";
 import {OtpCreator} from "@/modules/otp/index.js";
 import {useTimer} from "@/composables/useTimer.js";
+import InputOtp from "primevue/inputotp";
 
 const props = defineProps({
   phone: {
     type: String,
     required: false,
-  }
-})
+  },
+  clientType: String
+});
 
-const emit = defineEmits(['prev', 'next'])
+const emit = defineEmits(['prev', 'next']);
 
-const timer = useTimer()
+const timer = useTimer();
 
-const otpInput = ref()
-const formValidRules = ref({otp: [requiredValidator]})
-const otpMessageError = ref('')
+const otpInput = ref();
+const formValidRules = ref({otp: [requiredValidator]});
+const otpMessageError = ref('');
 
 const {
   otpCode,
   loading,
   confirm,
-} = OtpCreator(props.phone)
+} = OtpCreator(props.phone);
 
 const onUpdateModelValue = async value => {
   if (value.length === 6) {
@@ -64,7 +66,7 @@ const onClickSendRetry = () => {
 
 defineExpose({
   startTimer: timer.start,
-})
+});
 </script>
 
 <template>
@@ -80,15 +82,11 @@ defineExpose({
           />
         </div>
         <div class="col-8 text-center">
-          <div>
-            <span class="app-h4 app-color-1B1B1B">
-              Введите SMS-код
-            </span>
+          <div class="app-h4 app-color-1B1B1B">
+            Введите SMS-код
           </div>
-          <div class="text-center">
-            <span class="app-body-2 app-color-1B1B1F font-medium">
-              SMS-код отправлен на номер +998 (XX) XXX-XX-{{ props.phone }}
-            </span>
+          <div class="text-center app-body-2 app-color-1B1B1F font-medium">
+            SMS-код отправлен на номер +998 (XX) XXX-XX-{{ props.phone?.slice(-2) }}
           </div>
         </div>
       </div>
@@ -106,6 +104,7 @@ defineExpose({
         <div class="flex justify-content-center">
 
           <AppOtpInput
+              autofocus
               v-model="otpCode"
               ref="otpInput"
               name="otp"
