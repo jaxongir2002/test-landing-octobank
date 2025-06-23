@@ -7,14 +7,17 @@ import {requiredValidator} from "@/utils/form/validators.js";
 import AppOtpInput from "@/components/AppOtpInput.vue";
 import {OtpCreator} from "@/modules/otp/index.js";
 import {useTimer} from "@/composables/useTimer.js";
-import InputOtp from "primevue/inputotp";
 
 const props = defineProps({
   phone: {
     type: String,
     required: false,
   },
-  clientType: String
+  clientType: String,
+  stepActive: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const emit = defineEmits(['prev', 'next']);
@@ -109,6 +112,7 @@ defineExpose({
               ref="otpInput"
               name="otp"
               :length="6"
+              :step-active="props.stepActive"
               :disabled="loading"
               :error-message="otpMessageError || $form?.otp?.error?.message"
               @update:model-value="onUpdateModelValue"

@@ -36,7 +36,6 @@ const onSuccessStep = ({number, status}, next) => {
 
 const onCreateAccount = (organization, next) => {
   petition.value = organization
-  console.log(organization)
   next('create-account')
 }
 
@@ -152,6 +151,7 @@ onMounted(() => {
           <AccountOpenOtpStep
               ref="accountOpenOtp"
               :phone="petition.phone"
+              :step-active="step === 'create-account'"
               :client-type="petition.clientType"
               @prev="activateCallback('account-form')"
               @next="activateCallback('identify-qr')"
@@ -161,6 +161,7 @@ onMounted(() => {
         <StepPanel v-slot="{ activateCallback }" :value="'identify-qr'">
           <AccountOpenIdentifyQr
               @prev="activateCallback('create-account')"
+              :step-active="step === 'identify-qr'"
               @recognized="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
               @unrecognized="activateCallback('identify-qr-unrecognized')"
           />

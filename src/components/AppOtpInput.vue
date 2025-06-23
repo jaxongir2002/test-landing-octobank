@@ -7,16 +7,25 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  stepActive: {
+    type: Boolean,
+    default: false
+  }
+});
+watch(() => props.stepActive, (newVal) => {
+  if (newVal) {
+    nextTick(() => {
+      focusInput();
+    });
+  }
 });
 
-onMounted(() => {
-  nextTick(() => {
-    const input = document.querySelector('.p-inputotp-input');
-    if (input) {
-      input.focus();
-    }
-  });
-});
+function focusInput() {
+  const input = document.querySelector('.app-otp-input input');
+  if (input) {
+    input.focus();
+  }
+}
 </script>
 
 <template>

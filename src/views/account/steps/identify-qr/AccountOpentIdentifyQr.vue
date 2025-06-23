@@ -1,28 +1,34 @@
 <script setup>
 import AccountOpenCard from "@/views/account/AccountOpenCard.vue";
 import AppButton from "@/components/AppButton.vue";
-import {useQrCode} from "@/composables/useQr.js";
 import {useVariantResolver} from "@/stores/useVariantResolver.js";
 import axios from "axios";
 
 const emit = defineEmits(['prev', 'recognized', 'unrecognized']);
-
-const qrCode = useQrCode('Qr code generation default text', {
-  width: 424,
-  height: 424,
+const props = defineProps({
+  stepActive: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const sessionId = ref(null);
+const iframeVisible = ref(false);
 
 const onClickBack = () => {
   emit('prev')
 }
 
+const stopCamera = () => {
+  iframeVisible.value = !iframeVisible.value;
+};
+
 const onClickEnter = () => {
   if (useVariantResolver().variantQr === 'recognized') {
-    emit('recognized')
+    emit('recognized');
+    stopCamera()
   } else {
-    emit('unrecognized')
+    emit('unrecognized');
   }
 }
 const basicUsername = 'micros24site';
@@ -43,9 +49,12 @@ async function postSession() {
   }
 }
 
-onMounted(() => {
-  postSession()
-})
+watch(() => props.stepActive, (newVal) => {
+  if (newVal) {
+    stopCamera();
+    postSession();
+  }
+});
 </script>
 
 <template>
@@ -70,7 +79,7 @@ onMounted(() => {
 
     <template #content>
       <div class="flex justify-content-center" style="height: 80vh">
-        <iframe width="100%" height="100%"
+        <iframe v-if="iframeVisible" width="100%" height="100%"
                 :src="`https://web.myid.uz/?pass_data=AS2342342&session_id=${sessionId}&birth_date=2005-06-10&is_resident=true&iframe=true&lang=ru`"
                 allow="camera;fullscreen" allowfullscreen=""
                 style="border: none; user-select: none; border-radius: 5px !important;"></iframe>
