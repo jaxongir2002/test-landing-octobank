@@ -23,8 +23,10 @@ const formValidRules = ref({
   seria: [requiredValidator],
   dateBirth: [requiredValidator],
   oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
+  thirdParties: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
+  advertising: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
 });
-const requiredFields = ['clientType', 'oferta', 'tin', 'seria', 'dateBirth', 'phone'];
+const requiredFields = ['clientType', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
@@ -49,20 +51,21 @@ const onClickNext = async () => {
   }
 }
 const isOrganizationValid = computed(() => {
-  return requiredFields.every(field => {
-    const value = organization.value[field];
+      return requiredFields.every(field => {
+        const value = organization.value[field];
 
-    if (field === 'tin' && (value === null)) {
-      return true;
-    }
+        if (field === 'tin' && (value === null)) {
+          return true;
+        }
 
-    if (field === 'oferta') {
-      return Array.isArray(value) && value.length;
-    }
+        if (field === 'oferta' && field === 'advertising' && field === 'thirdParties') {
+          return Array.isArray(value) && value.length;
+        }
 
-    return !!value;
-  });
-});
+        return !!value;
+      });
+    })
+;
 
 
 const onUpdateRadioButton = () => {
@@ -188,38 +191,40 @@ onMounted(() => {
           </div>
           <div class="col-12 pl-4 ">
             <div class="flex items-center gap-2">
-              <Checkbox v-model="organization.oferta" inputId="oferta" name="oferta" value="oferta"/>
-              <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
+              <Checkbox v-model="organization.advertising" inputId="advertising" name="advertising"
+                        value="advertising"/>
+              <label for="advertising" class="cursor-pointer text-checkbox select-auto font-medium"
                      style="width: 90%; font-size: 17px">Нажимая на кнопку, я даю свое согласие на рекламное
                 информирование.
               </label>
             </div>
             <Message
-                v-if="$form?.oferta?.error?.message"
+                v-if="$form?.advertising?.error?.message"
                 class="app-form-message-error mt-2"
                 severity="error"
                 size="small"
                 variant="simple"
             >
-              {{ $form?.oferta?.error?.message }}
+              {{ $form?.advertising?.error?.message }}
             </Message>
           </div>
           <div class="col-12 pl-4 ">
             <div class="flex items-center gap-2">
-              <Checkbox v-model="organization.oferta" inputId="oferta" name="oferta" value="oferta"/>
-              <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
+              <Checkbox v-model="organization.thirdParties" inputId="thirdParties" name="thirdParties"
+                        value="thirdParties"/>
+              <label for="thirdParties" class="cursor-pointer text-checkbox select-auto font-medium"
                      style="width: 90%; font-size: 17px">
                 Нажимая на кнопку, я даю свое согласие на передачу персональных данных третьим лицам (партнерам)
               </label>
             </div>
             <Message
-                v-if="$form?.oferta?.error?.message"
+                v-if="$form?.thirdParties?.error?.message"
                 class="app-form-message-error mt-2"
                 severity="error"
                 size="small"
                 variant="simple"
             >
-              {{ $form?.oferta?.error?.message }}
+              {{ $form?.thirdParties?.error?.message }}
             </Message>
           </div>
         </div>

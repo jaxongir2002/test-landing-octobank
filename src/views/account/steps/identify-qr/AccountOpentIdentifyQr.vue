@@ -38,7 +38,6 @@ async function postSession() {
       }
     })
     sessionId.value = res.data.data.session_id
-    console.log(res)
   } catch (err) {
     console.log(err)
   }
@@ -70,7 +69,7 @@ onMounted(() => {
     </template>
 
     <template #content>
-      <div class="flex justify-content-center" style="height: 60vh">
+      <div class="flex justify-content-center" style="height: 80vh">
         <iframe width="100%" height="100%"
                 :src="`https://web.myid.uz/?pass_data=AS2342342&session_id=${sessionId}&birth_date=2005-06-10&is_resident=true&iframe=true&lang=ru`"
                 allow="camera;fullscreen" allowfullscreen=""
