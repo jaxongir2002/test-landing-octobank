@@ -3,7 +3,7 @@ import {ref} from 'vue';
 import AccountOpenCard from "@/views/account/AccountOpenCard.vue";
 import AppButton from "@/components/AppButton.vue";
 
-const emit = defineEmits(['prev', 'recognized', 'unrecognized']);
+const emit = defineEmits(['prev', 'next', 'unrecognized']);
 const props = defineProps({
   stepActive: {
     type: Boolean,

@@ -171,7 +171,7 @@ onMounted(() => {
           <AccountOpenCheckVideo
               @prev="activateCallback('identify-qr')"
               :step-active="step === 'check-video'"
-              @recognized="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
+              @next="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
           />
         </StepPanel>
         <StepPanel v-slot="{ activateCallback }" :value="'identify-qr-unrecognized'">
