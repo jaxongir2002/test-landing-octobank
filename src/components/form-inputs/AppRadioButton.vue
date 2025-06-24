@@ -10,7 +10,7 @@ const elementId = computed(() => {
 </script>
 
 <template>
-  <div class="flex items-center gap-2">
+  <div class="flex gap-2" style="align-items: center">
     <RadioButton
         :inputId="elementId"
         v-bind="$attrs"
@@ -19,7 +19,7 @@ const elementId = computed(() => {
         v-if="$attrs.label"
         :for="elementId"
         style="font-size: 17px"
-        class="cursor-pointer"
+        class="cursor-pointer font-medium"
     >
       {{ $attrs.label }}
     </label>

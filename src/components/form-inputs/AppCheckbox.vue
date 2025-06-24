@@ -19,7 +19,7 @@ const props = defineProps({
 
 <template>
   <div>
-    <div class="flex items-center gap-2">
+    <div class="flex gap-2" style="align-items: center">
       <Checkbox
           :inputId="elementId"
           v-bind="$attrs"
@@ -28,6 +28,7 @@ const props = defineProps({
       <label
           v-if="$attrs.label"
           :for="elementId"
+
           class="app-form-message-error cursor-pointer select-auto font-medium"
       >
         {{ $attrs.label }}

@@ -12,31 +12,44 @@ const hasAccounted = ref(false);
 
 const accountantDocs = [
   {
-    title: 'Документ, удостоверяющий личность бухгалтера',
-    file: null
-  },
-  {
-    title: 'Приказ о назначении бухгалтера',
-    file: null
+    header: 'Данные бухгалтера',
+    items: [
+        {
+        title: 'Документ, удостоверяющий личность бухгалтера',
+        file: null
+      },
+      {
+        title: 'Приказ о назначении бухгалтера',
+        file: null
+      }]
   }
 ];
 const documents = reactive([
   {
-    title: 'Документ, удостоверяющий личность руководителя',
-    file: null
+    header: 'Корпоративные документы',
+    items: [{
+      title: 'Карточка с образцами подписей и оттисками печати (без нотариального заверения)',
+      file: null
+    },
+      {
+        title: 'Устав',
+        file: null
+      },]
   },
   {
-    title: 'Карточка с образцами подписей и оттисками печати (без нотариального заверения)',
-    file: null
+    header: 'Данные руководителя',
+    items: [
+      {
+        title: 'Документ, удостоверяющий личность руководителя',
+        file: null
+      },
+      {
+        title: 'Приказ о назначении директора',
+        file: null
+      }
+    ]
   },
-  {
-    title: 'Устав',
-    file: null
-  },
-  {
-    title: 'Приказ о назначении директора',
-    file: null
-  },
+
 ]);
 const application = reactive({
   directorIsPublicPerson: 'true',
@@ -73,33 +86,6 @@ const formValidRules = reactive({
 
 const form = ref();
 
-const validateErrorApplicationData = computed(() => {
-  let error = false
-
-  if (!application.value.bankProducts?.length) {
-    error = true
-  }
-
-  if (!application.value.sourceMoney?.length) {
-    error = true
-  }
-
-  if (application.value.accountInAnotherBank === 'true' && !application.value.accountInAnotherBankName?.trim()) {
-    error = true
-  }
-
-  if (application.value.requiredPayUsa === 'true' && !application.value.requiredPayUsaTaxId?.trim()) {
-    error = true
-  }
-
-
-  if (application.value.sourceMoney.includes('other') && !application.value.sourceMoneyOther?.trim()) {
-    error = true
-  }
-
-  return error
-})
-
 const onClickBack = () => {
   emit('prev')
 }
@@ -110,13 +96,14 @@ const handleFileUpload = (event, index) => {
     documents[index].file = file
   }
 }
-watch(hasAccounted, (value) => {
-  if (value !== true) {
-    documents.splice(-2, 2);
-  } else {
+
+watchEffect(() => {
+  if (hasAccounted.value === false) {
     documents.push(...accountantDocs);
+  } else {
+    documents.splice(-2, 2);
   }
-});
+})
 </script>
 
 <template>
@@ -131,7 +118,7 @@ watch(hasAccounted, (value) => {
               @click="onClickBack"
           />
         </div>
-        <div class="app-h2 col-8 text-center" style="color: #33373E">
+        <div class="app-header-font-size col-8 text-center" style="color: #33373E;">
           Документы
         </div>
       </div>
@@ -144,24 +131,28 @@ watch(hasAccounted, (value) => {
           :resolver="(validation) => AppResolver(formValidRules, validation)"
           :validateOnBlur="true"
       >
-        <div class="pl-4 mb-3" style="display: flex; font-size: 24px; color: #374867; align-items: center; gap: .5rem">
+        <div class="pl-4 mb-3" style="display: flex; font-size: 20px; color: #374867; align-items: center; gap: .5rem">
           <ToggleSwitch v-model="hasAccounted"/>
           Руководитель является бухгалтером
         </div>
 
 
-        <ol class="pl-4">
+        <ol class="pl-4" v-for="(item, index) in documents"
+            :key="index">
+          <div style="font-size: 18px;color: #374867; margin-bottom: 15px; font-weight: bold">
+            {{ item.header }}
+          </div>
           <li
-              v-for="(item, index) in documents"
+              v-for="(infos, index) in item.items"
               :key="index"
-              class="mb-5"
+              class="mb-3"
           >
-            <div style="font-size: 18px" class="app-color-1B1B1C font-medium mb-4">
-              {{ item.title }}
+            <div style="font-size: 18px" class="app-color-1B1B1C font-medium mb-3">
+              {{ infos.title }}
             </div>
 
             <label class="custom-upload">
-              {{ item.file?.name || 'Загрузить файл' }}
+              {{ infos.file?.name || 'Загрузить файл' }}
               <input type="file" hidden @change="handleFileUpload($event, index)"/>
             </label>
           </li>

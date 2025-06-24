@@ -2,21 +2,22 @@
 import DatePicker from 'primevue/datepicker';
 import Message from 'primevue/message';
 import FloatLabel from "primevue/floatlabel"
+import { computed } from 'vue';
+import { useAttrs } from 'vue';
 
 const props = defineProps({
   errorMessage: {
     type: String,
     required: false,
   },
-})
-
+});
 
 const elementId = computed(() => {
-  const attrs = useAttrs()
-  const _elementIdToken = attrs.id || attrs.label
+  const attrs = useAttrs();
+  const _elementIdToken = attrs.id || attrs.label;
 
-  return _elementIdToken ? `app-text-field-${_elementIdToken}-${Math.random().toString(36).slice(2, 7)}` : undefined
-})
+  return _elementIdToken ? `app-text-field-${_elementIdToken}-${Math.random().toString(36).slice(2, 7)}` : undefined;
+});
 </script>
 
 <template>
@@ -27,7 +28,12 @@ const elementId = computed(() => {
         variant="in"
     >
       <DatePicker
+          class="custom-datepicker"
           v-bind="$attrs"
+          :showOnFocus="false"
+          fluid
+          :placeholder="$attrs.placeholder || ''"
+
           dateFormat="dd.mm.yy"
           :id="elementId"
       />
@@ -44,3 +50,14 @@ const elementId = computed(() => {
     </Message>
   </div>
 </template>
+<style >
+.custom-datepicker input::placeholder {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.custom-datepicker input:focus::placeholder {
+  opacity: 1;
+}
+
+</style>

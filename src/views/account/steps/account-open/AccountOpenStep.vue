@@ -88,7 +88,7 @@ onMounted(() => {
               @click="emit('prev')"
           />
         </div>
-        <div style="color:#33373e" class="col-8 app-h3 text-center">
+        <div style="color:#33373e" class="col-8 app-header-font-size text-center">
           Открыть счёт
         </div>
       </div>
@@ -141,17 +141,19 @@ onMounted(() => {
                 v-model="organization.seria"
                 class="flex-1"
                 name="seria"
+                :placeholder="'__._______'"
                 v-mask="'AA#######'"
                 :error-message="$form?.seria?.error?.message"
-                :label="selectIsPerson()?'Серия и номер удостоверяющего документа': ' Серия и номер удостоверяющего документа руководитель'"
+                :label="selectIsPerson()?'Серия и номер удостоверяющего документа': ' Серия и номер удостоверяющего документа руководителя'"
             />
           </div>
           <div class="col-12">
             <AppDatePicker v-model="organization.dateBirth"
                            class="flex-1"
                            name="dateBirth"
+                           :placeholder="'__.__.____'"
                            :error-message="$form?.dateBirth?.error?.message"
-                           :label="selectIsPerson()?'Дата рождения ':'Дата рождения руководитель'"/>
+                           :label="selectIsPerson()?'Дата рождения ':'Дата рождения руководителя'"/>
 
           </div>
           <div class="col-12 mb-2">
@@ -160,7 +162,7 @@ onMounted(() => {
                 class="flex-1"
                 name="phone"
                 default-value="+998"
-                :label="selectIsPerson()?'Номер телефона ':'Номер телефона руководитель'"
+                :label="selectIsPerson()?'Номер телефона ':'Номер телефона руководителя'"
                 v-mask="phoneMask"
                 :error-message="$form?.phone?.error?.message"
             />

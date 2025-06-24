@@ -2,13 +2,14 @@
 import InputText from 'primevue/inputtext';
 import Message from 'primevue/message';
 import FloatLabel from "primevue/floatlabel"
+import DatePicker from "primevue/datepicker";
 
 const props = defineProps({
   errorMessage: {
     type: String,
     required: false,
   },
-  defaultValue: String
+  defaultValue: String,
 })
 
 const elementId = computed(() => {
@@ -20,15 +21,17 @@ const elementId = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div           class="custom-datepicker">
     <FloatLabel
         class="flex flex-col flex-column gap-1"
         id="in_label"
         variant="in"
     >
       <InputText
+
           v-bind="$attrs"
           :id="elementId"
+          :placeholder="$attrs.placeholder || ''"
           :default-value="props.defaultValue"
       />
       <label :for="elementId">{{ $attrs?.label }}</label>

@@ -85,7 +85,7 @@ defineExpose({
           />
         </div>
         <div class="col-8 text-center">
-          <div class="app-h4 app-color-1B1B1B">
+          <div class="app-color-1B1B1B">
             Введите SMS-код
           </div>
           <div class="text-center app-body-2 app-color-1B1B1F font-medium">

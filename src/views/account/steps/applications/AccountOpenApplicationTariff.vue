@@ -8,7 +8,6 @@ import AppRadioButton from "@/components/form-inputs/AppRadioButton.vue";
 import AppCheckbox from "@/components/form-inputs/AppCheckbox.vue";
 import {useVariantResolver} from "@/stores/useVariantResolver.js";
 import Divider from 'primevue/divider';
-import {getOnlyNumbersFromString} from "@/utils/index.js";
 
 const emit = defineEmits(['prev', 'next']);
 
@@ -81,24 +80,6 @@ const onClickBack = () => {
 const onAcceptPetition = () => {
   emit('next', useVariantResolver().variantAcceptPetition)
 }
-
-const onUpdateCountEimzo = (value) => {
-  let num = parseInt(getOnlyNumbersFromString(value.value))
-
-  if (num > 10) {
-    application.value.countEimzo = 10
-    num = 10
-  } else if (num < 0) {
-    application.value.countEimzo = 0
-    num = 0
-  }
-
-  updateCountEmployees(num)
-}
-const openFile = (filename) => {
-  const url = `/files/${filename}`
-  window.open(url, '_blank')
-}
 </script>
 
 <template>
@@ -113,10 +94,8 @@ const openFile = (filename) => {
               @click="onClickBack"
           />
         </div>
-        <div class="text-center sm:col-8">
-          <div class="app-h2 text-center sm:text-5xl font-semibold" style="color: #33373e">Детали открываемого счета
-          </div>
-          <div class="text-base sm:text-lg">Ответьте на вопросы</div>
+        <div class="text-center app-header-font-size font-semibold" style="color: #33373e; text-align: right; ;width: 70%">
+          Детали открываемого счета
         </div>
       </div>
     </template>
@@ -136,32 +115,33 @@ const openFile = (filename) => {
               Тариф
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
+            <div style="display: flex;gap: 0.5rem; align-items: center">
               <AppRadioButton
                   v-model="application.tarif"
-                  label="test"
+                  label="Оптимал"
                   style="grid-column: span 12 / span 12"
                   name="tarif"
                   value="yes"
               />
-              <AppRadioButton
-                  style="grid-column: span 12 / span 12"
-                  v-model="application.tarif"
-                  label="test"
-                  name="tarif"
-                  value="no"
-              />
+              <a target="_blank" href="https://octobank.uz/biznesu/tarify-dlya-korporativnyh-klientov">
+                <i
+                    v-tooltip.bottom="'Тариф'"
+                    style="scale: 1"
+                    class="pi pi-info-circle app-icon-span"
+                ></i>
+              </a>
+
             </div>
           </li>
           <li class="mb-5">
             <div class="app-color-1B1B1C font-medium mb-4 flex items-center flex-wrap">
-              <span class="mr-3 text-xl">Тип счета</span>
+              <span class="mr-3 text-xl">Тип расчетного счета</span>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
               <AppRadioButton
                   v-model="application.primary"
-                  label="Основной"
+                  label="Основной счет"
                   style="grid-column: span 6 / span 6"
                   name="primary"
                   value="yes"
@@ -169,7 +149,7 @@ const openFile = (filename) => {
               <AppRadioButton
                   style="grid-column: span 6 / span 6"
                   v-model="application.primary"
-                  label="Вторичный"
+                  label="Вторичный счет"
                   name="primary"
                   value="no"
               />
@@ -177,7 +157,7 @@ const openFile = (filename) => {
           </li>
           <li class="mb-5">
             <div class="app-color-1B1B1C font-medium mb-4 text-xl">
-              Выбор дополнительной валюты
+              Валютные счета
             </div>
             <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
               <div style="grid-column: span 6 / span 6;">
@@ -212,36 +192,49 @@ const openFile = (filename) => {
             <div class="app-color-1B1B1C font-medium mb-4 text-xl">
               Дополнительные услуги
             </div>
-            <div class="flex flex-column gap-2">
-              <div style="display: flex; align-items: center; gap: .5rem">
-                <AppCheckbox
-                    v-model="application.acquiring"
-                    label="Эквайринг"
-                    name="acquiring"
-                    value="yes"
-                />
-                <i
-                    v-tooltip.bottom="'Тариф'"
-                    @click="openFile('document.docx')"
-                    class="pi pi-info-circle app-icon-span"
-                ></i>
-              </div>
+            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
+              <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
+                <div style="display: flex; align-items: center; gap: .5rem">
+                  <AppCheckbox
+                      v-model="application.acquiring"
+                      label="Предоставление платежного терминала (Humo, Visa, Mastecard)"
+                      name="acquiring"
+                      value="yes"
+                  />
+                </div>
+                <div style="display: flex; align-items: center; gap: .5rem">
+                  <AppCheckbox
+                      v-model="application.acquiring"
+                      label="Интернет Эквайринг"
+                      name="acquiring"
+                      value="no"
+                  />
+                </div>
 
-              <div style="display: flex; align-items: center; gap: .5rem">
-                <AppCheckbox
-                    v-model="application.acquiring"
-                    label="Интернет Эквайринг"
-                    name="acquiring"
-                    value="no"
-                />
-                <i
-                    v-tooltip.bottom="'Тариф'"
-                    @click="openFile('document.docx')"
-                    class="pi pi-info-circle app-icon-span"
-                ></i>
-              </div>
 
+              </div>
+              <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
+                <div style="display: flex; align-items: center; gap: .5rem">
+                  <AppCheckbox
+                      v-model="application.acquiring"
+                      label="Предоставление Онлайн-ККМ"
+                      name="acquiring"
+                      value="yes"
+                  />
+                </div>
+
+                <div style="display: flex; align-items: center; gap: .5rem; position: relative; top: 15%">
+                  <AppCheckbox
+                      v-model="application.acquiring"
+                      label="Предоставления платежного терминала (UzCard)"
+                      name="acquiring"
+                      value="no"
+                  />
+                </div>
+
+              </div>
             </div>
+
             <Divider class="mb-4"/>
 
             <div class="flex flex-column gap-2">

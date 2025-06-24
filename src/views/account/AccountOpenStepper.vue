@@ -14,6 +14,7 @@ import qrIdentificationUnRecognized from "@/assets/img/qr-identification-unrecog
 import AccountOpenApplicationFirst from "@/views/account/steps/applications/AccountOpenApplicationFirst.vue";
 import AccountOpenApplicationTariff from "@/views/account/steps/applications/AccountOpenApplicationTariff.vue";
 import AccountOpenApplicationOrg from "@/views/account/steps/applications/AccountOpenApplicationOrg.vue";
+import AccountOpenCheckVideo from "@/views/account/steps/identify-qr/AccountOpenCheckVideo.vue";
 
 const variantStore = useVariantResolver();
 
@@ -162,8 +163,15 @@ onMounted(() => {
           <AccountOpenIdentifyQr
               @prev="activateCallback('create-account')"
               :step-active="step === 'identify-qr'"
-              @recognized="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
+              @recognized="activateCallback('check-video')"
               @unrecognized="activateCallback('identify-qr-unrecognized')"
+          />
+        </StepPanel>
+        <StepPanel v-slot="{ activateCallback }" :value="'check-video'">
+          <AccountOpenCheckVideo
+              @prev="activateCallback('identify-qr')"
+              :step-active="step === 'check-video'"
+              @recognized="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
           />
         </StepPanel>
         <StepPanel v-slot="{ activateCallback }" :value="'identify-qr-unrecognized'">
