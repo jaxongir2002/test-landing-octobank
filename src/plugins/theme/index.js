@@ -53,7 +53,6 @@ export default definePreset(Aura, {
                 radius: "24px",
             }
         },
-
         checkbox: {
             borderColor: '#697684',
             hoverBorderColor: '#374867',

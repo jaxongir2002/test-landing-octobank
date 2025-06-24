@@ -8,8 +8,8 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  defaultValue: String
 })
-
 
 const elementId = computed(() => {
   const attrs = useAttrs()
@@ -29,6 +29,7 @@ const elementId = computed(() => {
       <InputText
           v-bind="$attrs"
           :id="elementId"
+          :default-value="props.defaultValue"
       />
       <label :for="elementId">{{ $attrs?.label }}</label>
     </FloatLabel>

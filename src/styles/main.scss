@@ -71,7 +71,6 @@ $page-background: #FFFF;
 
   .p-steppanel {
     border-radius: 24px;
-
   }
 }
 
@@ -129,4 +128,8 @@ $page-background: #FFFF;
 .p-datepicker-year-selected {
   background: #374867 !important;
 
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+  background: #374867 !important;
 }

@@ -88,10 +88,8 @@ onMounted(() => {
               @click="emit('prev')"
           />
         </div>
-        <div class="col-8 text-center">
-          <span class="app-h3" style="color:#33373e">
-            Открыть счёт
-          </span>
+        <div style="color:#33373e" class="col-8 app-h3 text-center">
+          Открыть счёт
         </div>
       </div>
     </template>
@@ -145,7 +143,7 @@ onMounted(() => {
                 name="seria"
                 v-mask="'AA#######'"
                 :error-message="$form?.seria?.error?.message"
-                :label="selectIsPerson()?'Серия и номер удостоверяющего документа': ' Серия и номер удостоверяющего документа директора'"
+                :label="selectIsPerson()?'Серия и номер удостоверяющего документа': ' Серия и номер удостоверяющего документа руководитель'"
             />
           </div>
           <div class="col-12">
@@ -153,7 +151,7 @@ onMounted(() => {
                            class="flex-1"
                            name="dateBirth"
                            :error-message="$form?.dateBirth?.error?.message"
-                           :label="selectIsPerson()?'Дата рождения ':'Дата рождения директора'"/>
+                           :label="selectIsPerson()?'Дата рождения ':'Дата рождения руководитель'"/>
 
           </div>
           <div class="col-12 mb-2">
@@ -161,7 +159,8 @@ onMounted(() => {
                 v-model="organization.phone"
                 class="flex-1"
                 name="phone"
-                :label="selectIsPerson()?'Номер телефона ':'Номер телефона директора'"
+                default-value="+998"
+                :label="selectIsPerson()?'Номер телефона ':'Номер телефона руководитель'"
                 v-mask="phoneMask"
                 :error-message="$form?.phone?.error?.message"
             />

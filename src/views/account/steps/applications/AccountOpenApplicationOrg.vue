@@ -4,12 +4,25 @@ import AppButton from "@/components/AppButton.vue";
 import {Form} from "@primevue/forms";
 import {AppResolver} from "@/utils/form/resolver.js";
 import {requiredValidator} from "@/utils/form/validators.js";
+import ToggleSwitch from 'primevue/toggleswitch';
 
 const emit = defineEmits(['prev', 'next']);
 
+const hasAccounted = ref(false);
+
+const accountantDocs = [
+  {
+    title: 'Документ, удостоверяющий личность бухгалтера',
+    file: null
+  },
+  {
+    title: 'Приказ о назначении бухгалтера',
+    file: null
+  }
+];
 const documents = reactive([
   {
-    title: 'Копии паспортов директора и главного бухгалтера',
+    title: 'Документ, удостоверяющий личность руководителя',
     file: null
   },
   {
@@ -17,10 +30,13 @@ const documents = reactive([
     file: null
   },
   {
-    title: 'Копии учредительных документов (устав, учредительный договор, приказ с подписью директора, приказ с подписью директора и бухгалтера)',
+    title: 'Устав',
     file: null
   },
-
+  {
+    title: 'Приказ о назначении директора',
+    file: null
+  },
 ]);
 const application = reactive({
   directorIsPublicPerson: 'true',
@@ -94,6 +110,13 @@ const handleFileUpload = (event, index) => {
     documents[index].file = file
   }
 }
+watch(hasAccounted, (value) => {
+  if (value !== true) {
+    documents.splice(-2, 2);
+  } else {
+    documents.push(...accountantDocs);
+  }
+});
 </script>
 
 <template>
@@ -121,6 +144,12 @@ const handleFileUpload = (event, index) => {
           :resolver="(validation) => AppResolver(formValidRules, validation)"
           :validateOnBlur="true"
       >
+        <div class="pl-4 mb-3" style="display: flex; font-size: 24px; color: #374867; align-items: center; gap: .5rem">
+          <ToggleSwitch v-model="hasAccounted"/>
+          Руководитель является бухгалтером
+        </div>
+
+
         <ol class="pl-4">
           <li
               v-for="(item, index) in documents"

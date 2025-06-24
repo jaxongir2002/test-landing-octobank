@@ -28,7 +28,6 @@ const elementId = computed(() => {
     >
       <DatePicker
           v-bind="$attrs"
-          :manualInput="false"
           dateFormat="dd.mm.yy"
           :id="elementId"
       />

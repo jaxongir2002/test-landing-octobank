@@ -69,10 +69,8 @@ watch(() => props.stepActive, (newVal) => {
               @click="onClickBack"
           />
         </div>
-        <div class="col-8 text-center">
-          <span class="app-h4 app-color-1B1B1B">
-            Наведите камеру телефона на QR-код
-          </span>
+        <div class="col-8 text-center app-h4 app-color-1B1B1B">
+          Идентификация
         </div>
       </div>
     </template>
