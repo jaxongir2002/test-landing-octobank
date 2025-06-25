@@ -227,20 +227,20 @@ onMounted(() => {
 
         <StepPanel v-slot="{ activateCallback }" :value="'application-first'">
           <AccountOpenApplicationFirst
-              @prev="activateCallback('account-form')"
+              @prev="activateCallback('check-video')"
               @next="activateCallback('application-tariff')"
           />
         </StepPanel>
         <StepPanel v-slot="{ activateCallback }" :value="'application-org'">
           <AccountOpenApplicationOrg
-              @prev="activateCallback('account-form')"
+              @prev="activateCallback('check-video')"
               @next="activateCallback('application-tariff')"
           />
         </StepPanel>
         <StepPanel v-slot="{ activateCallback }" :value="'application-tariff'">
           <AccountOpenApplicationTariff
-              @prev="activateCallback('account-form')"
-              @next=" activateCallback('application-tariff-success')"
+              @prev="activateCallback(petition.clientType === 'company' ? 'application-org' : 'application-first')"
+          @next="activateCallback('application-tariff-success')"
           />
         </StepPanel>
 
@@ -255,7 +255,6 @@ onMounted(() => {
 
         <StepPanel v-slot="{ activateCallback }" :value="'application-tariff-success'">
           <AccountOpenCard>
-
             <template #title>
               <div class="text-center mb-3">
                 <div class="app-h4 app-color-1B1B1B mb-1">

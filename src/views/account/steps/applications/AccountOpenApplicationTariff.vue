@@ -247,10 +247,15 @@ const onAcceptPetition = () => {
                   name="dkbo"
                   :error-message="$form?.oferta?.error?.message"
               />
-              <label v-if="application.additionalServices.length" style="padding-left: 29px"
-                     class="app-form-message-error select-auto font-medium">
-                Нажимая на кнопку, я подтверждаю оферту на эквайринг
-              </label>
+
+              <AppCheckbox
+                  v-if="application.additionalServices.length"
+                  v-model="application.oferta"
+                  label="Нажимая на кнопку, я подтверждаю оферту на эквайринг"
+                  value="ekvaring"
+                  name="ekvaring"
+                  :error-message="$form?.oferta?.error?.message"
+              />
             </div>
           </li>
         </ol>
