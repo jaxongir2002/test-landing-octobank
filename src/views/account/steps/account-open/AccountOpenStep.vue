@@ -129,6 +129,8 @@ onMounted(() => {
                 v-show="!selectIsPerson()"
                 v-model="organization.tin"
                 class="flex-1"
+                active-float
+                :placeholder="'_________'"
                 name="tin"
                 v-mask="'#########'"
                 :error-message="$form?.tin?.error?.message"
@@ -174,9 +176,9 @@ onMounted(() => {
               <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
                      style="width: 90%; font-size: 17px">Нажимая
                 на кнопку, я даю согласие на обработку <a target="_blank"
-                                                          href="https://octobank.uz/usloviya-ispolzovaniya"><strong>персональных
+                                                          href="https://octobank.uz/usloviya-ispolzovaniya"><strong style="border-bottom:1px solid #374867">персональных
                   данных</strong></a> в соответствии с <a target="_blank"
-                                                          href="https://octobank.uz/politika-konfidentsialnosti"><strong>политикой
+                                                          href="https://octobank.uz/politika-konfidentsialnosti"><strong style="border-bottom:1px solid #374867">политикой
                   обработки персональных данных</strong></a>
               </label>
             </div>

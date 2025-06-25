@@ -50,6 +50,7 @@ const application = ref({
   primary: 'yes',
   acquiring: [],
   tarif: 'yes',
+  additionalServices: [],
   employee: {
     phone: null,
     pinfl: null,
@@ -94,7 +95,8 @@ const onAcceptPetition = () => {
               @click="onClickBack"
           />
         </div>
-        <div class="text-center app-header-font-size font-semibold" style="color: #33373e; text-align: right; ;width: 70%">
+        <div class="text-center app-header-font-size font-semibold"
+             style="color: #33373e; text-align: right; ;width: 70%">
           Детали открываемого счета
         </div>
       </div>
@@ -196,18 +198,18 @@ const onAcceptPetition = () => {
               <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
-                      v-model="application.acquiring"
+                      v-model="application.additionalServices"
                       label="Предоставление платежного терминала (Humo, Visa, Mastecard)"
-                      name="acquiring"
-                      value="yes"
+                      name="additionalServices"
+                      value="acquiring"
                   />
                 </div>
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
-                      v-model="application.acquiring"
+                      v-model="application.additionalServices"
                       label="Интернет Эквайринг"
-                      name="acquiring"
-                      value="no"
+                      name="additionalServices"
+                      value="internet"
                   />
                 </div>
 
@@ -216,19 +218,19 @@ const onAcceptPetition = () => {
               <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
-                      v-model="application.acquiring"
+                      v-model="application.additionalServices"
                       label="Предоставление Онлайн-ККМ"
-                      name="acquiring"
-                      value="yes"
+                      name="additionalServices"
+                      value="kkm"
                   />
                 </div>
 
                 <div style="display: flex; align-items: center; gap: .5rem; position: relative; top: 15%">
                   <AppCheckbox
-                      v-model="application.acquiring"
+                      v-model="application.additionalServices"
                       label="Предоставления платежного терминала (UzCard)"
-                      name="acquiring"
-                      value="no"
+                      name="additionalServices"
+                      value="uzcard"
                   />
                 </div>
 
@@ -241,19 +243,14 @@ const onAcceptPetition = () => {
               <AppCheckbox
                   v-model="application.oferta"
                   label="Нажимая на кнопку, я подтверждаю оферту на открытие счета и ДКБО"
-                  value="oferta"
-                  name="oferta"
+                  value="additionalServices"
+                  name="dkbo"
                   :error-message="$form?.oferta?.error?.message"
               />
-
-
-              <AppCheckbox
-                  v-model="application.oferta"
-                  label="Нажимая на кнопку, я подтверждаю оферту на эквайринг"
-                  value="yes"
-                  name="acquiring"
-                  :error-message="$form?.oferta?.error?.message"
-              />
+              <label v-if="application.additionalServices.length" style="padding-left: 29px"
+                     class="app-form-message-error select-auto font-medium">
+                Нажимая на кнопку, я подтверждаю оферту на эквайринг
+              </label>
             </div>
           </li>
         </ol>

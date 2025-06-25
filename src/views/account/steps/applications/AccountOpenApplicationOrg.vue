@@ -101,7 +101,7 @@ watchEffect(() => {
   if (hasAccounted.value === false) {
     documents.push(...accountantDocs);
   } else {
-    documents.splice(-2, 2);
+    documents.splice(-1);
   }
 })
 </script>

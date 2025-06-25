@@ -240,7 +240,7 @@ onMounted(() => {
         <StepPanel v-slot="{ activateCallback }" :value="'application-tariff'">
           <AccountOpenApplicationTariff
               @prev="activateCallback('account-form')"
-              @next=" activateCallback('application-accept-by-phone')"
+              @next=" activateCallback('application-tariff-success')"
           />
         </StepPanel>
 
@@ -259,11 +259,11 @@ onMounted(() => {
             <template #title>
               <div class="text-center mb-3">
                 <div class="app-h4 app-color-1B1B1B mb-1">
-                  Заявка № 545663 принята
+                  Заявка № 545663 успешно принята и передана в обработку
                 </div>
                 <div class="fz-16">
-                  Вы можете отслеживать статус заявки по её номеру<br>
-                  в приложении или на сайте
+                  Срок обработки — до 24 часов<br>
+                  Статус заявки можно отслеживать по её номеру на нашем сайте.
                 </div>
               </div>
             </template>

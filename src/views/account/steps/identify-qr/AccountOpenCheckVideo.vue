@@ -12,6 +12,7 @@ const props = defineProps({
 });
 const isRecording = ref(false);
 const videoElement = ref(null);
+const disabledRecord = ref(true);
 const stream = ref(null);
 
 const constraints = {
@@ -34,12 +35,13 @@ function stopRecording() {
     stream.value = null;
   }
   isRecording.value = false;
-
+  disabledRecord.value = false;
   // Optional: Video elementni uzish
   if (videoElement.value) {
     videoElement.value.srcObject = null;
   }
 }
+
 const onClickBack = () => {
   emit('prev')
 }
@@ -70,9 +72,9 @@ const onClickBack = () => {
         </p>
 
         <ul style="color: #33373e;font-size: 18px" class="list-disc pl-5 space-y-2 text-[18px]">
-          <li> ID-карта/паспорт и ваше лицо хорошо видны </li>
-          <li> Информация в ID-карте/паспорте читаема </li>
-          <li> Освещение достаточно яркое </li>
+          <li> ID-карта/паспорт и ваше лицо хорошо видны</li>
+          <li> Информация в ID-карте/паспорте читаема</li>
+          <li> Освещение достаточно яркое</li>
         </ul>
 
         <div class="flex gap-3 mt-4 mb-4">
@@ -113,7 +115,6 @@ const onClickBack = () => {
       </div>
     </template>
 
-
     <template #footer>
       <div class="flex gap-4">
         <AppButton
@@ -125,6 +126,7 @@ const onClickBack = () => {
 
         <AppButton
             class="flex-1"
+            :disabled="disabledRecord"
             label="Продолжить"
             @click="emit('next')"
         />
