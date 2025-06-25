@@ -64,13 +64,12 @@ const isOrganizationValid = computed(() => {
 
         return !!value;
       });
-    })
-;
-
+})
 
 const onUpdateRadioButton = () => {
   organization.value.tin = null;
 }
+
 onMounted(() => {
   window.scrollTo(0, 0)
 })
@@ -141,6 +140,7 @@ onMounted(() => {
                 v-model="organization.seria"
                 class="flex-1"
                 name="seria"
+                active-float
                 :placeholder="'__._______'"
                 v-mask="'AA#######'"
                 :error-message="$form?.seria?.error?.message"

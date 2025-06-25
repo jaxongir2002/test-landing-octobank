@@ -110,7 +110,6 @@ onMounted(() => {
                 </div>
               </div>
             </template>
-
           </AccountOpenCard>
         </StepPanel>
 

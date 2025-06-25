@@ -63,38 +63,56 @@ const onClickBack = () => {
       </div>
     </template>
     <template #content>
-      <p style="font-size: 16px; margin-bottom: 10px; color: #374867; font-weight: 500; line-height: 150%">
-        Для подтверждения личности, пожалуйста, запишите короткое видео с помощью вашей веб-камеры.
-        На видео должно быть видно ваше лицо и удостоверяющий документ - ID-карта/паспорт (разворот с фотографией).
-      </p>
-      <ul class="list-none pl-3">
-        <li class="mb-1">ID-карта/паспорт и ваше лицо хорошо видны</li>
-        <li class="mb-1 text-[#374867]">Информация в ID-карте/паспорте читаема</li>
-        <li class="mb-1">Освещение достаточно яркое.</li>
-      </ul>
-      <div class="flex gap-2 mt-3 mb-2">
-        <button
-            v-if="!isRecording"
-            @click="startRecording"
-            style="border-radius: 12px"
-            class="px-4 py-2 bg-blue-600 text-white "
-        >
-          Начать запись
-        </button>
+      <div class="p-4 bg-[#F9FAFB] rounded-xl shadow-md border border-[#E0E6ED]">
+        <p style="color: #33373e;font-size: 20px" class="text-[20px] mb-4 text-[#374867] font-medium leading-[150%]">
+          Для подтверждения личности, пожалуйста, запишите короткое видео с помощью вашей веб-камеры.
+          На видео должно быть видно ваше лицо и удостоверяющий документ - ID-карта/паспорт (разворот с фотографией).
+        </p>
 
-        <button
+        <ul style="color: #33373e;font-size: 18px" class="list-disc pl-5 space-y-2 text-[18px]">
+          <li> ID-карта/паспорт и ваше лицо хорошо видны </li>
+          <li> Информация в ID-карте/паспорте читаема </li>
+          <li> Освещение достаточно яркое </li>
+        </ul>
+
+        <div class="flex gap-3 mt-4 mb-4">
+          <button
+              v-if="!isRecording"
+              @click="startRecording"
+              style="border-radius: 12px; background: #374867"
+              class="flex-1 py-3 cursor-pointer rounded-xl text-white text-[18px] transition"
+          >
+            Начать запись
+          </button>
+
+          <button
+              v-if="isRecording"
+              @click="stopRecording"
+              style="border-radius: 12px; background: #374867"
+              class="flex-1 py-3 rounded-xl text-white text-[18px] transition"
+          >
+            Приостановить запись
+          </button>
+        </div>
+
+        <div
             v-if="isRecording"
-            @click="stopRecording"
-            style="border-radius: 12px"
-            class="px-4 py-2 bg-yellow-500 text-white rounded"
+            ref="videoElement"
+            style="justify-content: center"
+            class="flex justify-center items-center mt-4"
         >
-          Приостановить запись
-        </button>
-      </div>
-      <div v-if="isRecording" ref="videoElement" style="display: flex; justify-content: center;align-items: center; margin-top: 10px">
-        <video style="border-radius: 10px;" :srcObject="stream" width="500" height="300" autoplay></video>
+          <video
+              style="border-radius: 12px"
+              class="rounded-lg border border-[#374867]"
+              :srcObject="stream"
+              width="500"
+              height="300"
+              autoplay
+          ></video>
+        </div>
       </div>
     </template>
+
 
     <template #footer>
       <div class="flex gap-4">
