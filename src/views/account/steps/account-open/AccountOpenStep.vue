@@ -159,7 +159,7 @@ onMounted(() => {
                 name="pnfl"
                 v-mask="'#########'"
                 :error-message="$form?.pnfl?.error?.message"
-                label="ПНФЛ"
+                label="ПИНФЛ"
             />
           </div>
           <div class="col-12">
