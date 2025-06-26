@@ -18,26 +18,26 @@ import Image from "primevue/image";
       <div style="width: 100%" class="text-banner text-left app-h2 line-height-2 mb-4">
         Расчетный счет для бизнеса — откройте за несколько шагов, не выходя из офиса
       </div>
-        <ul class="text-banner">
-          <li class="app-body-1 font-medium mb-3 list-none">
-            — Комплексное банковское обслуживание
-          </li>
-          <li class="app-body-1 font-medium mb-3 list-none">
-            — Удобное открытие уставного фонда
-          </li>
-          <li class="app-body-1 font-medium mb-3 list-none">
-            — Полный контроль и управление счетом онлайн
-          </li>
-          <li class="app-body-1 font-medium mb-3 list-none">
-            — Быстрые и надежные расчеты
-          </li>
-          <li class="app-body-1 font-medium mb-3 list-none">
-            — Документы и справки — без лишней бюрократии
-          </li>
-          <li class="app-body-1 font-medium mb-3 list-none">
-            — Консультации и поддержка
-          </li>
-        </ul>
+      <ul class="text-banner">
+        <li class="app-body-1 font-medium mb-3 list-none">
+          — Комплексное банковское обслуживание
+        </li>
+        <li class="app-body-1 font-medium mb-3 list-none">
+          — Заменить на Удобное открытие счета
+        </li>
+        <li class="app-body-1 font-medium mb-3 list-none">
+          — Заменить на - Полное управление и контроль счетом
+        </li>
+        <li class="app-body-1 font-medium mb-3 list-none">
+          — Быстрые и надежные расчеты
+        </li>
+        <li class="app-body-1 font-medium mb-3 list-none">
+          — Документы и справки — без лишней бюрократии
+        </li>
+        <li class="app-body-1 font-medium mb-3 list-none">
+          — Консультации и поддержка
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -51,13 +51,14 @@ import Image from "primevue/image";
     color: #33373e;
   }
 }
+
 @media (max-width: 768px) {
   .app-h2 {
     font-size: 18px;
     text-align: left;
     width: 100%;
   }
-  .app-body-1{
+  .app-body-1 {
     font-size: 14px;
   }
 }

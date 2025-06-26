@@ -16,19 +16,6 @@ const countEmployees = reactive([{
   phone: "",
 }]);
 
-const updateCountEmployees = (count) => {
-  const newEmployees = []
-
-  for (let i = 0; i < count; i++) {
-    newEmployees.push({
-      pinfl: "",
-      phone: "",
-    })
-  }
-
-  countEmployees.value = newEmployees
-}
-
 const generateValidateForEimzoEmployees = computed(() => {
   let validEmployees = {}
 
@@ -111,7 +98,28 @@ const onAcceptPetition = () => {
           :validateOnValueUpdate="false"
       >
         <ol class="pl-0 sm:pl-4">
+          <li class="mb-5">
+            <div class="app-color-1B1B1C font-medium mb-4 flex items-center flex-wrap">
+              <span class="mr-3 text-xl">Тип расчетного счета</span>
+            </div>
 
+            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
+              <AppRadioButton
+                  v-model="application.primary"
+                  label="Основной счет"
+                  style="grid-column: span 6 / span 6"
+                  name="primary"
+                  value="yes"
+              />
+              <AppRadioButton
+                  style="grid-column: span 6 / span 6"
+                  v-model="application.primary"
+                  label="Вторичный счет"
+                  name="primary"
+                  value="no"
+              />
+            </div>
+          </li>
           <li class="mb-5">
             <div class="app-color-1B1B1C mr-3 text-xl font-medium mb-4 flex items-center flex-wrap">
               Тариф
@@ -133,28 +141,6 @@ const onAcceptPetition = () => {
                 ></i>
               </a>
 
-            </div>
-          </li>
-          <li class="mb-5">
-            <div class="app-color-1B1B1C font-medium mb-4 flex items-center flex-wrap">
-              <span class="mr-3 text-xl">Тип расчетного счета</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
-              <AppRadioButton
-                  v-model="application.primary"
-                  label="Основной счет"
-                  style="grid-column: span 6 / span 6"
-                  name="primary"
-                  value="yes"
-              />
-              <AppRadioButton
-                  style="grid-column: span 6 / span 6"
-                  v-model="application.primary"
-                  label="Вторичный счет"
-                  name="primary"
-                  value="no"
-              />
             </div>
           </li>
           <li class="mb-5">
@@ -186,22 +172,44 @@ const onAcceptPetition = () => {
                     value="rub"
                 />
               </div>
+              <div style="grid-column: span 6 / span 6;">
+                <AppCheckbox
+                    v-model="application.services"
+                    label="В дирхамах"
+                    name="services"
+                    value="drxam"
+                />
+              </div>
+              <div style="grid-column: span 6 / span 6;">
+                <AppCheckbox
+                    v-model="application.services"
+                    label="В лирах"
+                    name="services"
+                    value="lira"
+                />
+              </div>
+              <div style="grid-column: span 6 / span 6;">
+                <AppCheckbox
+                    v-model="application.services"
+                    label="В юанях"
+                    name="services"
+                    value="yuan"
+                />
+              </div>
             </div>
           </li>
-
-          <!-- 3. Дополнительные услуги -->
           <li class="mb-5">
             <div class="app-color-1B1B1C font-medium mb-4 text-xl">
-              Дополнительные услуги
+              Выбор услуг
             </div>
             <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem;">
               <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
                       v-model="application.additionalServices"
-                      label="Предоставление платежного терминала (Humo, Visa, Mastecard)"
+                      label="Интернет банк"
                       name="additionalServices"
-                      value="acquiring"
+                      value="internent_bank"
                   />
                 </div>
                 <div style="display: flex; align-items: center; gap: .5rem">
@@ -209,28 +217,17 @@ const onAcceptPetition = () => {
                       v-model="application.additionalServices"
                       label="Интернет Эквайринг"
                       name="additionalServices"
-                      value="internet"
+                      value="internet_acquiring"
                   />
                 </div>
-
-
               </div>
               <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
                       v-model="application.additionalServices"
-                      label="Предоставление Онлайн-ККМ"
+                      label="Эквайринг"
                       name="additionalServices"
-                      value="kkm"
-                  />
-                </div>
-
-                <div style="display: flex; align-items: center; gap: .5rem; position: relative; top: 15%">
-                  <AppCheckbox
-                      v-model="application.additionalServices"
-                      label="Предоставления платежного терминала (UzCard)"
-                      name="additionalServices"
-                      value="uzcard"
+                      value="acquiring"
                   />
                 </div>
 
@@ -249,11 +246,19 @@ const onAcceptPetition = () => {
               />
 
               <AppCheckbox
-                  v-if="application.additionalServices.length"
+                  v-if="application.additionalServices.includes('acquiring')"
                   v-model="application.oferta"
                   label="Нажимая на кнопку, я подтверждаю оферту на эквайринг"
                   value="ekvaring"
                   name="ekvaring"
+                  :error-message="$form?.oferta?.error?.message"
+              />
+              <AppCheckbox
+                  v-if="application.additionalServices.includes('internet_acquiring')"
+                  v-model="application.oferta"
+                  label="Нажимая на кнопку, я подтверждаю Интернет эквайринг"
+                  value="oferta"
+                  name="internet_acquiring"
                   :error-message="$form?.oferta?.error?.message"
               />
             </div>

@@ -22,11 +22,12 @@ const formValidRules = ref({
   phone: [requiredValidator],
   seria: [requiredValidator],
   dateBirth: [requiredValidator],
+  pnfl: [requiredValidator],
   oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   thirdParties: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   advertising: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
 });
-const requiredFields = ['clientType', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
+const requiredFields = ['clientType', 'pnfl', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
@@ -51,20 +52,31 @@ const onClickNext = async () => {
   }
 }
 const isOrganizationValid = computed(() => {
-      return requiredFields.every(field => {
-        const value = organization.value[field];
+  return requiredFields.every(field => {
+    const value = organization.value[field];
 
-        if (field === 'tin' && (value === null)) {
-          return true;
-        }
-
-        if (field === 'oferta' && field === 'advertising' && field === 'thirdParties') {
-          return Array.isArray(value) && value.length;
-        }
-
+    if (field === 'pnfl') {
+      if (organization.value.clientType === 'person') {
         return !!value;
-      });
-})
+      }
+      return true;
+    }
+
+    if (field === 'tin') {
+      if (organization.value.clientType === 'company') {
+        return !!value;
+      }
+      return true;
+    }
+
+    if (['oferta', 'advertising', 'thirdParties'].includes(field)) {
+      return Array.isArray(value) ? value.length > 0 : !!value;
+    }
+
+    return !!value;
+  });
+});
+
 
 const onUpdateRadioButton = () => {
   organization.value.tin = null;
@@ -139,6 +151,19 @@ onMounted(() => {
           </div>
           <div class="col-12">
             <AppTextField
+                v-show="organization.clientType==='person'"
+                v-model="organization.pnfl"
+                class="flex-1"
+                active-float
+                :placeholder="'_________'"
+                name="pnfl"
+                v-mask="'#########'"
+                :error-message="$form?.pnfl?.error?.message"
+                label="ПНФЛ"
+            />
+          </div>
+          <div class="col-12">
+            <AppTextField
                 v-model="organization.seria"
                 class="flex-1"
                 name="seria"
@@ -176,9 +201,11 @@ onMounted(() => {
               <label for="oferta" class="cursor-pointer text-checkbox select-auto font-medium"
                      style="width: 90%; font-size: 17px">Нажимая
                 на кнопку, я даю согласие на обработку <a target="_blank"
-                                                          href="https://octobank.uz/usloviya-ispolzovaniya"><strong style="border-bottom:1px solid #374867">персональных
+                                                          href="https://octobank.uz/usloviya-ispolzovaniya"><strong
+                    style="border-bottom:1px solid #374867">персональных
                   данных</strong></a> в соответствии с <a target="_blank"
-                                                          href="https://octobank.uz/politika-konfidentsialnosti"><strong style="border-bottom:1px solid #374867">политикой
+                                                          href="https://octobank.uz/politika-konfidentsialnosti"><strong
+                    style="border-bottom:1px solid #374867">политикой
                   обработки персональных данных</strong></a>
               </label>
             </div>
