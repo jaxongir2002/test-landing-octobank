@@ -23,10 +23,10 @@ import Image from "primevue/image";
           — Комплексное банковское обслуживание
         </li>
         <li class="app-body-1 font-medium mb-3 list-none">
-          — Заменить на Удобное открытие счета
+          — Удобное открытие счета
         </li>
         <li class="app-body-1 font-medium mb-3 list-none">
-          — Заменить на - Полное управление и контроль счетом
+          — Полное управление и контроль счетом
         </li>
         <li class="app-body-1 font-medium mb-3 list-none">
           — Быстрые и надежные расчеты
