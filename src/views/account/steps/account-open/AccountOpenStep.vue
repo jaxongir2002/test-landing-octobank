@@ -23,11 +23,13 @@ const formValidRules = ref({
   seria: [requiredValidator],
   dateBirth: [requiredValidator],
   pnfl: [requiredValidator],
+  nameOfOrganization: [requiredValidator],
+  typeOfactivity: [requiredValidator],
   oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   thirdParties: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   advertising: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
 });
-const requiredFields = ['clientType', 'pnfl', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
+const requiredFields = ['clientType', 'nameOfOrganization', 'typeOfactivity', 'pnfl', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
@@ -68,7 +70,18 @@ const isOrganizationValid = computed(() => {
       }
       return true;
     }
-
+    if (field === 'nameOfOrganization') {
+      if (organization.value.clientType === 'company') {
+        return !!value;
+      }
+      return true;
+    }
+    if (field === 'typeOfactivity') {
+      if (organization.value.clientType === 'person') {
+        return !!value;
+      }
+      return true;
+    }
     if (['oferta', 'advertising', 'thirdParties'].includes(field)) {
       return Array.isArray(value) ? value.length > 0 : !!value;
     }
@@ -136,9 +149,8 @@ onMounted(() => {
         </div>
 
         <div class="flex flex-column">
-          <div class="col-12">
+          <div v-show="!selectIsPerson()" class="col-12">
             <AppTextField
-                v-show="!selectIsPerson()"
                 v-model="organization.tin"
                 class="flex-1"
                 active-float
@@ -149,9 +161,19 @@ onMounted(() => {
                 label="ИНН"
             />
           </div>
-          <div class="col-12">
+          <div v-show="!selectIsPerson()" class="col-12">
             <AppTextField
-                v-show="organization.clientType==='person'"
+                v-model="organization.nameOfOrganization"
+                class="flex-1"
+                active-float
+                :placeholder="'___________'"
+                name="nameOfOrganization"
+                :error-message="$form?.nameOfOrganization?.error?.message"
+                label="Наименование организации"
+            />
+          </div>
+          <div v-show="organization.clientType==='person'" class="col-12">
+            <AppTextField
                 v-model="organization.pnfl"
                 class="flex-1"
                 active-float
@@ -162,6 +184,19 @@ onMounted(() => {
                 label="ПИНФЛ"
             />
           </div>
+          <div v-show="selectIsPerson()" class="col-12">
+            <AppTextField
+                v-model="organization.typeOfactivity"
+                class="flex-1"
+                active-float
+                :placeholder="'___________'"
+                name="typeOfactivity"
+                v-mask="'############'"
+                :error-message="$form?.typeOfactivity?.error?.message"
+                label="Вид деятельности"
+            />
+          </div>
+
           <div class="col-12">
             <AppTextField
                 v-model="organization.seria"

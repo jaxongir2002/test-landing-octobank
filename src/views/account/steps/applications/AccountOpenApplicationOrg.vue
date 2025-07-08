@@ -131,7 +131,7 @@ watchEffect(() => {
           :resolver="(validation) => AppResolver(formValidRules, validation)"
           :validateOnBlur="true"
       >
-        <div class="pl-4 mb-3" style="display: flex; font-size: 20px; font-weight: 500; color: #374867; align-items: center; gap: .5rem">
+        <div class="pl-4 mb-3" style="display: flex; font-size: 20px; font-weight: 800; color: #374867; align-items: center; gap: .5rem">
           <ToggleSwitch v-model="hasAccounted"/>
           Руководитель является бухгалтером
         </div>

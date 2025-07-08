@@ -37,7 +37,7 @@ const application = ref({
   primary: 'yes',
   acquiring: [],
   tarif: 'yes',
-  additionalServices: [],
+  additionalServices: ['internent_bank'],
   employee: {
     phone: null,
     pinfl: null,
@@ -52,14 +52,12 @@ const formValidRules = computed(() => {
 })
 
 const validateErrorApplicationData = computed(() => {
-  let error = false
+  const hasOferta = application.value.oferta?.length > 0
+  const hasAdditionalServices = application.value.additionalServices?.length > 0
 
-  if (!application.value.oferta?.length) {
-    error = true
-  }
-
-  return error
+  return !(hasOferta && hasAdditionalServices)
 })
+
 
 const onClickBack = () => {
   emit('prev')
@@ -210,7 +208,13 @@ const onAcceptPetition = () => {
                       label="Интернет банк"
                       name="additionalServices"
                       value="internent_bank"
+                      :error-message="$form?.additionalServices?.error?.message"
                   />
+                  <i
+                      v-tooltip.bottom="'Интернет-банк подключается автоматически'"
+                      style="scale: 1"
+                      class="pi pi-info-circle app-icon-span"
+                  ></i>
                 </div>
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
@@ -261,6 +265,9 @@ const onAcceptPetition = () => {
                   name="internet_acquiring"
                   :error-message="$form?.oferta?.error?.message"
               />
+              <div style="font-weight: 600" v-if="application.additionalServices.includes('internet_acquiring')">
+                Сайт куда нужен Интернет эквайринг
+              </div>
             </div>
           </li>
         </ol>
