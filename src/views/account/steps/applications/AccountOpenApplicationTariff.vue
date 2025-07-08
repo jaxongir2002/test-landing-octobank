@@ -8,6 +8,7 @@ import AppRadioButton from "@/components/form-inputs/AppRadioButton.vue";
 import AppCheckbox from "@/components/form-inputs/AppCheckbox.vue";
 import {useVariantResolver} from "@/stores/useVariantResolver.js";
 import Divider from 'primevue/divider';
+import AppTextField from "@/components/form-inputs/AppTextField.vue";
 
 const emit = defineEmits(['prev', 'next']);
 
@@ -41,7 +42,8 @@ const application = ref({
   employee: {
     phone: null,
     pinfl: null,
-  }
+  },
+  website:''
 })
 
 const formValidRules = computed(() => {
@@ -223,7 +225,9 @@ const onAcceptPetition = () => {
                       name="additionalServices"
                       value="internet_acquiring"
                   />
+
                 </div>
+
               </div>
               <div style="grid-column: span 6 / span 6;" class="flex flex-column gap-2">
                 <div style="display: flex; align-items: center; gap: .5rem">
@@ -234,7 +238,15 @@ const onAcceptPetition = () => {
                       value="acquiring"
                   />
                 </div>
+                <div>
+                  <AppTextField
+                      style="font-weight: 600" v-if="application.additionalServices.includes('internet_acquiring')"
+                      v-model="application.website"
+                      class="flex-1" name="nameOfOrganization"
+                      label="Сайт куда нужен Интернет эквайринг"
 
+                  />
+                </div>
               </div>
             </div>
 
@@ -265,9 +277,7 @@ const onAcceptPetition = () => {
                   name="internet_acquiring"
                   :error-message="$form?.oferta?.error?.message"
               />
-              <div style="font-weight: 600" v-if="application.additionalServices.includes('internet_acquiring')">
-                Сайт куда нужен Интернет эквайринг
-              </div>
+
             </div>
           </li>
         </ol>

@@ -70,18 +70,6 @@ const isOrganizationValid = computed(() => {
       }
       return true;
     }
-    if (field === 'nameOfOrganization') {
-      if (organization.value.clientType === 'company') {
-        return !!value;
-      }
-      return true;
-    }
-    if (field === 'typeOfactivity') {
-      if (organization.value.clientType === 'person') {
-        return !!value;
-      }
-      return true;
-    }
     if (['oferta', 'advertising', 'thirdParties'].includes(field)) {
       return Array.isArray(value) ? value.length > 0 : !!value;
     }
@@ -161,17 +149,6 @@ onMounted(() => {
                 label="ИНН"
             />
           </div>
-          <div v-show="!selectIsPerson()" class="col-12">
-            <AppTextField
-                v-model="organization.nameOfOrganization"
-                class="flex-1"
-                active-float
-                :placeholder="'___________'"
-                name="nameOfOrganization"
-                :error-message="$form?.nameOfOrganization?.error?.message"
-                label="Наименование организации"
-            />
-          </div>
           <div v-show="organization.clientType==='person'" class="col-12">
             <AppTextField
                 v-model="organization.pnfl"
@@ -184,7 +161,21 @@ onMounted(() => {
                 label="ПИНФЛ"
             />
           </div>
-          <div v-show="selectIsPerson()" class="col-12">
+          <div class="col-12">
+            <AppTextField
+                v-model="organization.nameOfOrganization"
+                class="flex-1"
+                active-float
+                :placeholder="'___________'"
+                v-mask="'AAAAAAAAAAAAAAAAAA'"
+                name="nameOfOrganization"
+                :error-message="$form?.nameOfOrganization?.error?.message"
+                :label="'Наименование ' + (selectIsPerson() ? 'ИП' : 'организации')"
+
+            />
+          </div>
+
+          <div class="col-12">
             <AppTextField
                 v-model="organization.typeOfactivity"
                 class="flex-1"
