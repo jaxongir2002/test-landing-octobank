@@ -43,7 +43,7 @@ const application = ref({
     phone: null,
     pinfl: null,
   },
-  website:''
+  website: ''
 })
 
 const formValidRules = computed(() => {
@@ -218,14 +218,20 @@ const onAcceptPetition = () => {
                       class="pi pi-info-circle app-icon-span"
                   ></i>
                 </div>
-                <div style="display: flex; align-items: center; gap: .5rem">
+                <div style="display: flex;flex-direction: column; justify-content: center; gap: .7rem">
                   <AppCheckbox
                       v-model="application.additionalServices"
                       label="Интернет Эквайринг"
                       name="additionalServices"
                       value="internet_acquiring"
                   />
+                  <AppTextField
+                      style="font-weight: 600" v-if="application.additionalServices.includes('internet_acquiring')"
+                      v-model="application.website"
+                      class="flex-1" name="nameOfOrganization"
+                      label="Сайт куда нужен Интернет эквайринг"
 
+                  />
                 </div>
 
               </div>
@@ -238,15 +244,7 @@ const onAcceptPetition = () => {
                       value="acquiring"
                   />
                 </div>
-                <div>
-                  <AppTextField
-                      style="font-weight: 600" v-if="application.additionalServices.includes('internet_acquiring')"
-                      v-model="application.website"
-                      class="flex-1" name="nameOfOrganization"
-                      label="Сайт куда нужен Интернет эквайринг"
 
-                  />
-                </div>
               </div>
             </div>
 

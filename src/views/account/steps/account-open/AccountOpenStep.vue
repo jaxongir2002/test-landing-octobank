@@ -167,11 +167,10 @@ onMounted(() => {
                 class="flex-1"
                 active-float
                 :placeholder="'___________'"
-                v-mask="'AAAAAAAAAAAAAAAAAA'"
                 name="nameOfOrganization"
                 :error-message="$form?.nameOfOrganization?.error?.message"
                 :label="'Наименование ' + (selectIsPerson() ? 'ИП' : 'организации')"
-
+                maxlength="80"
             />
           </div>
 
@@ -182,7 +181,7 @@ onMounted(() => {
                 active-float
                 :placeholder="'___________'"
                 name="typeOfactivity"
-                v-mask="'############'"
+                maxlength="80"
                 :error-message="$form?.typeOfactivity?.error?.message"
                 label="Вид деятельности"
             />
