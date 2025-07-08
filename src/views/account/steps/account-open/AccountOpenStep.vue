@@ -161,31 +161,6 @@ onMounted(() => {
                 label="ПИНФЛ"
             />
           </div>
-          <div class="col-12">
-            <AppTextField
-                v-model="organization.nameOfOrganization"
-                class="flex-1"
-                active-float
-                :placeholder="'___________'"
-                name="nameOfOrganization"
-                :error-message="$form?.nameOfOrganization?.error?.message"
-                :label="'Наименование ' + (selectIsPerson() ? 'ИП' : 'организации')"
-                maxlength="80"
-            />
-          </div>
-
-          <div class="col-12">
-            <AppTextField
-                v-model="organization.typeOfactivity"
-                class="flex-1"
-                active-float
-                :placeholder="'___________'"
-                name="typeOfactivity"
-                maxlength="80"
-                :error-message="$form?.typeOfactivity?.error?.message"
-                label="Вид деятельности"
-            />
-          </div>
 
           <div class="col-12">
             <AppTextField
