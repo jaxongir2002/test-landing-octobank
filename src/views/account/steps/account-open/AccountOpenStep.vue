@@ -23,13 +23,11 @@ const formValidRules = ref({
   seria: [requiredValidator],
   dateBirth: [requiredValidator],
   pnfl: [requiredValidator],
-  nameOfOrganization: [requiredValidator],
-  typeOfactivity: [requiredValidator],
   oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   thirdParties: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   advertising: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
 });
-const requiredFields = ['clientType', 'nameOfOrganization', 'typeOfactivity', 'pnfl', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
+const requiredFields = ['clientType',  'pnfl', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
