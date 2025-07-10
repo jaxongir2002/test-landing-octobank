@@ -207,7 +207,7 @@ const onAcceptPetition = () => {
                 <div style="display: flex; align-items: center; gap: .5rem">
                   <AppCheckbox
                       v-model="application.additionalServices"
-                      label="Интернет банк"
+                      label="Интернет-банк"
                       name="additionalServices"
                       value="internent_bank"
                       :error-message="$form?.additionalServices?.error?.message"
@@ -221,7 +221,7 @@ const onAcceptPetition = () => {
                 <div style="display: flex;flex-direction: column; justify-content: center; gap: .7rem">
                   <AppCheckbox
                       v-model="application.additionalServices"
-                      label="Интернет Эквайринг"
+                      label="Интернет-эквайринг"
                       name="additionalServices"
                       value="internet_acquiring"
                   />
@@ -229,7 +229,7 @@ const onAcceptPetition = () => {
                       style="font-weight: 600" v-if="application.additionalServices.includes('internet_acquiring')"
                       v-model="application.website"
                       class="flex-1" name="nameOfOrganization"
-                      label="Сайт куда нужен Интернет эквайринг"
+                      label="Адрес сайта для подключения к интернет-эквайрингу"
 
                   />
                 </div>
@@ -262,7 +262,7 @@ const onAcceptPetition = () => {
               <AppCheckbox
                   v-if="application.additionalServices.includes('acquiring')"
                   v-model="application.oferta"
-                  label="Нажимая на кнопку, я подтверждаю оферту на эквайринг"
+                  label="Нажимая на кнопку, я подтверждаю оферту на Интернет-эквайринг"
                   value="ekvaring"
                   name="ekvaring"
                   :error-message="$form?.oferta?.error?.message"
