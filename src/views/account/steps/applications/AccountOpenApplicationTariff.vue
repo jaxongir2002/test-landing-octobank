@@ -267,15 +267,6 @@ const onAcceptPetition = () => {
                   name="ekvaring"
                   :error-message="$form?.oferta?.error?.message"
               />
-              <AppCheckbox
-                  v-if="application.additionalServices.includes('internet_acquiring')"
-                  v-model="application.oferta"
-                  label="Нажимая на кнопку, я подтверждаю Интернет эквайринг"
-                  value="oferta"
-                  name="internet_acquiring"
-                  :error-message="$form?.oferta?.error?.message"
-              />
-
             </div>
           </li>
         </ol>
