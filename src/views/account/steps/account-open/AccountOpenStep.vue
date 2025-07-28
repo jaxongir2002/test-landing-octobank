@@ -6,7 +6,7 @@ import AppTextField from "@/components/form-inputs/AppTextField.vue";
 import {Form} from "@primevue/forms";
 import Checkbox from 'primevue/checkbox';
 import {AppResolver} from "@/utils/form/resolver.js";
-import {requiredValidator} from "@/utils/form/validators.js";
+import {requiredValidator,emailValidator} from "@/utils/form/validators.js";
 import {phoneMask} from "@/utils/index.js";
 import {openAccountCreator} from "@/modules/open-account/index.js";
 import Message from "primevue/message";
@@ -26,8 +26,9 @@ const formValidRules = ref({
   oferta: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   thirdParties: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
   advertising: [(val) => requiredValidator.call(null, val, 'Это поле обязательно для заполнения')],
+  email: [emailValidator],
 });
-const requiredFields = ['clientType',  'pnfl', 'oferta', 'thirdParties', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
+const requiredFields = ['clientType', 'pnfl', 'oferta', 'thirdParties', 'email', 'advertising', 'tin', 'seria', 'dateBirth', 'phone'];
 
 const selectIsPerson = () => {
   return organization.value.clientType === 'person'
@@ -67,6 +68,10 @@ const isOrganizationValid = computed(() => {
         return !!value;
       }
       return true;
+    }
+    if (field === 'email') {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return !!value && regex.test(value);
     }
     if (['oferta', 'advertising', 'thirdParties'].includes(field)) {
       return Array.isArray(value) ? value.length > 0 : !!value;
@@ -147,6 +152,7 @@ onMounted(() => {
                 label="ИНН"
             />
           </div>
+
           <div v-show="organization.clientType==='person'" class="col-12">
             <AppTextField
                 v-model="organization.pnfl"
@@ -160,6 +166,18 @@ onMounted(() => {
             />
           </div>
 
+          <div class="col-12">
+            <AppTextField
+                v-model="organization.email"
+                class="flex-1"
+                active-float
+                :placeholder="'_________'"
+                name="email"
+                :error-message="$form?.email?.error?.message"
+                label="Электронная почта"
+                type="email"
+            />
+          </div>
           <div class="col-12">
             <AppTextField
                 v-model="organization.seria"
