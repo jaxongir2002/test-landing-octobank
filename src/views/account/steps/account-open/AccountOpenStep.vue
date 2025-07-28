@@ -166,18 +166,7 @@ onMounted(() => {
             />
           </div>
 
-          <div class="col-12">
-            <AppTextField
-                v-model="organization.email"
-                class="flex-1"
-                active-float
-                :placeholder="'_________'"
-                name="email"
-                :error-message="$form?.email?.error?.message"
-                label="Электронная почта"
-                type="email"
-            />
-          </div>
+
           <div class="col-12">
             <AppTextField
                 v-model="organization.seria"
@@ -210,7 +199,18 @@ onMounted(() => {
                 :error-message="$form?.phone?.error?.message"
             />
           </div>
-
+          <div class="col-12">
+            <AppTextField
+                v-model="organization.email"
+                class="flex-1"
+                active-float
+                :placeholder="'_________'"
+                name="email"
+                :error-message="$form?.email?.error?.message"
+                label="Электронная почта"
+                type="email"
+            />
+          </div>
           <div class="col-12 pl-4">
             <div class="flex items-center gap-2">
               <Checkbox v-model="organization.oferta" inputId="oferta" name="oferta" value="oferta"/>
